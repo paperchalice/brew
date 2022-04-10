@@ -364,7 +364,7 @@ class Pathname
     targets.each do |target|
       target = Pathname.new(target) # allow pathnames or strings
       join(target.basename).write <<~SH
-        #!/bin/bash
+        #!/bin/sh
         exec "#{target}" "$@"
       SH
     end
@@ -380,7 +380,7 @@ class Pathname
     env.each { |key, value| env_export << "#{key}=\"#{value}\" " }
     dirname.mkpath
     write <<~SH
-      #!/bin/bash
+      #!/bin/sh
       #{env_export}exec "#{target}" #{args} "$@"
     SH
   end
@@ -409,7 +409,7 @@ class Pathname
   def write_jar_script(target_jar, script_name, java_opts = "", java_version: nil)
     mkpath
     (self/script_name).write <<~EOS
-      #!/bin/bash
+      #!/bin/sh
       export JAVA_HOME="#{Language::Java.overridable_java_home_env(java_version)[:JAVA_HOME]}"
       exec "${JAVA_HOME}/bin/java" #{java_opts} -jar "#{target_jar}" "$@"
     EOS
