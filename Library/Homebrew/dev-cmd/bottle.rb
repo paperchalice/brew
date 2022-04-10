@@ -426,7 +426,7 @@ module Homebrew
           mv tar_path, relocatable_tar_path
           # Use gzip, faster to compress than bzip2, faster to uncompress than bzip2
           # or an uncompressed tarball (and more bandwidth friendly).
-          gz = Zlib::GzipWriter.open(bottle_path)
+          gz = Zlib::GzipWriter.open(bottle_path, level=Zlib::BEST_COMPRESSION)
           gz.mtime = tab.source_modified_time
           gz.orig_name = relocatable_tar_path
           File.open(relocatable_tar_path, "rb") do |tarfile|
