@@ -176,7 +176,7 @@ class Cmd
     args = []
 
     case arg
-    when /^-g\d?$/, /^-gstabs\d+/, "-gstabs+", /^-ggdb\d?/,
+    when /^-gstabs\d+/, "-gstabs+", /^-ggdb\d?/,
       /^-mtune=.+/, /^-mcpu=.+/, /^-O[0-9zs]?$/,
       "-fast", "-no-cpp-precomp", "-pedantic",
       "-pedantic-errors", "-Wno-long-double",
