@@ -1649,7 +1649,7 @@ class Formula
     %W[
       -DCMAKE_INSTALL_PREFIX=#{install_prefix}
       -DCMAKE_INSTALL_LIBDIR=#{install_libdir}
-      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_TYPE=MinSizeRel
       -DCMAKE_FIND_FRAMEWORK=#{find_framework}
       -DCMAKE_VERBOSE_MAKEFILE=ON
       -Wno-dev
