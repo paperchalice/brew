@@ -55,7 +55,7 @@ module Stdenv
     end
 
     # Os is the default Apple uses for all its stuff so let's trust them
-    define_cflags "-Os #{SAFE_CFLAGS_FLAGS}"
+    define_cflags "-Oz #{SAFE_CFLAGS_FLAGS}"
 
     begin
       send(compiler)
