@@ -89,15 +89,6 @@ module Homebrew
       end
 
       if keg_only
-        if HOMEBREW_PREFIX.to_s == HOMEBREW_DEFAULT_PREFIX && formula.present? && formula.keg_only_reason.by_macos?
-          caveats = Caveats.new(formula)
-          opoo <<~EOS
-            Refusing to link macOS provided/shadowed software: #{keg.name}
-            #{caveats.keg_only_text(skip_reason: true).strip}
-          EOS
-          next
-        end
-
         if !args.force? && (formula.blank? || !formula.keg_only_reason.versioned_formula?)
           opoo "#{keg.name} is keg-only and must be linked with `--force`."
           puts_keg_only_path_message(keg)
