@@ -351,4 +351,64 @@ module Homebrew
       end
     end
   end
+
+  def self.puts_deps_tree(dependents, args:, recursive: false)
+    check_head_spec(dependents) if args.HEAD?
+    dependents.each do |d|
+      puts d.full_name
+      recursive_deps_tree(d, dep_stack: [], prefix: "", recursive:, args:)
+      puts
+    end
+  end
+
+  def self.dependables(formula, args:)
+    includes, ignores = args_includes_ignores(args)
+    deps = @use_runtime_dependencies ? formula.runtime_dependencies : formula.deps
+    deps = select_includes(deps, ignores, includes)
+    reqs = select_includes(formula.requirements, ignores, includes) if args.include_requirements?
+    reqs ||= []
+    reqs + deps
+  end
+
+  def self.recursive_deps_tree(formula, dep_stack:, prefix:, recursive:, args:)
+    dependables = dependables(formula, args:)
+    max = dependables.length - 1
+    dep_stack.push formula.name
+    dependables.each_with_index do |dep, i|
+      tree_lines = if i == max
+        "└──"
+      else
+        "├──"
+      end
+
+      display_s = "#{tree_lines} #{dep_display_name(dep, args:)}"
+
+      # Detect circular dependencies and consider them a failure if present.
+      is_circular = dep_stack.include?(dep.name)
+      if is_circular
+        display_s = "#{display_s} (CIRCULAR DEPENDENCY)"
+        # Homebrew.failed = true
+      end
+
+      puts "#{prefix}#{display_s}"
+
+      next if !recursive || is_circular
+
+      prefix_addition = if i == max
+        "    "
+      else
+        "│   "
+      end
+
+      next unless dep.is_a? Dependency
+
+      recursive_deps_tree(Formulary.factory(dep.name),
+                          dep_stack:,
+                          prefix:    prefix + prefix_addition,
+                          recursive: true,
+                          args:)
+    end
+
+    dep_stack.pop
+  end
 end
