@@ -134,9 +134,7 @@ module OS
     # Returns the path to an SDK or nil, following the rules set by {sdk}.
     def sdk_path(v = nil)
       s = sdk(v)
-      p = s&.path.to_s
-      p.gsub! /\d+/, ""
-      Pathname.new p
+      s&.path
     end
 
     def sdk_path_if_needed(v = nil)
