@@ -27,6 +27,7 @@ module Hardware
       def optimization_flags
         @optimization_flags ||= {
           native:             arch_flag("native"),
+          skylake:            "-march=skylake",
           ivybridge:          "-march=ivybridge",
           sandybridge:        "-march=sandybridge",
           westmere:           "-march=westmere",
