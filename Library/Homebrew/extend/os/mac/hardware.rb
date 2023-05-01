@@ -17,7 +17,7 @@ module Hardware
     elsif version >= :ventura
       :westmere
     elsif version >= :mojave
-      :nehalem
+      :skylake
     else
       generic_oldest_cpu
     end

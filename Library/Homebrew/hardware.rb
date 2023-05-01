@@ -29,6 +29,7 @@ module Hardware
         @optimization_flags ||= T.let({
           dunno:              "",
           native:             arch_flag("native"),
+          skylake:            "-march=skylake",
           ivybridge:          "-march=ivybridge",
           sandybridge:        "-march=sandybridge",
           westmere:           "-march=westmere",
