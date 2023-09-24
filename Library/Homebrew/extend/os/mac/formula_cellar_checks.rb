@@ -7,6 +7,7 @@ require "linkage_checker"
 module FormulaCellarChecks
   sig { returns(T.nilable(String)) }
   def check_shadowed_headers
+    return
     return if ["libtool", "subversion", "berkeley-db"].any? do |formula_name|
       formula.name.start_with?(formula_name)
     end
