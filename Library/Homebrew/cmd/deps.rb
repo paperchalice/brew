@@ -326,7 +326,7 @@ module Homebrew
           is_circular = dep_stack.include?(dep.name)
           if is_circular
             display_s = "#{display_s} (CIRCULAR DEPENDENCY)"
-            Homebrew.failed = !dep.name.include?("gcc")
+            break
           end
 
           puts "#{prefix}#{display_s}"
